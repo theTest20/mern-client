@@ -1,0 +1,199 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import * as api from '../api';
+
+export const createPost = createAsyncThunk(
+  'post/createPost',
+  async ({ dataPost, navigate, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.createPost(dataPost);
+      toast.success('Post Added Successfully');
+      navigate('/');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getAllPosts = createAsyncThunk(
+  'post/getAllPosts',
+  async (page, { rejectWithValue }) => {
+    try {
+      const response = await api.getAllPosts(page);
+      // console.log(response);
+      return response.data;
+    } catch (err) {
+      // console.log(err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getPost = createAsyncThunk(
+  'post/getPost',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.getPost(id);
+      return response.data;
+    } catch (err) {
+      //console.log(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const getUserPosts = createAsyncThunk(
+  'post/getuserPosts',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await api.getUserPosts(userId);
+      // console.log(response.data);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const deletePost = createAsyncThunk(
+  'post/deletePost',
+  async ({ id, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.deletePost(id);
+      toast.success('Post deleted successfully!');
+      return response.data;
+    } catch (err) {
+      // console.log(err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const updatePost = createAsyncThunk(
+  'post/updatePost',
+  async ({ id, updateData, toast, navigate }, { rejectWithValue }) => {
+    // console.log(id); //id ok
+    console.log(updateData); //undefined
+    try {
+      const response = await api.updatePost(id, updateData);
+      toast.success('Post updated successfully!');
+      console.log(response.data); //old datas
+      navigate('/');
+      return response.data;
+    } catch (err) {
+      // console.log(err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const postSlice = createSlice({
+  name: 'post',
+  initialState: {
+    post: {},
+    posts: [],
+    userPosts: [],
+    currentPage: 1,
+    numberOfPages: null,
+    error: '',
+    loading: false,
+  },
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+  },
+  extraReducers: {
+    [createPost.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [createPost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.post = [action.payload];
+    },
+    [createPost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getAllPosts.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getAllPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      // console.log(action.payload);
+      state.posts = action.payload.data; //this one might cause some issue
+      state.numberOfPages = action.payload.numberOfPages;
+      state.currentPage = action.payload.currentPage;
+    },
+    [getAllPosts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getPost.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getPost.fulfilled]: (state, action) => {
+      state.loading = false;
+
+      state.post = action.payload.data;
+    },
+    [getPost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getUserPosts.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getUserPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      console.log(action.payload);
+      state.userPosts = action.payload;
+    },
+    [getUserPosts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [deletePost.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      const {
+        arg: { id },
+      } = action.meta;
+      if (id) {
+        state.userPosts = state.userPosts.filter((item) => item._id !== id);
+        state.posts = state.posts.filter((item) => item._id !== id);
+      }
+    },
+    [deletePost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [updatePost.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [updatePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      const {
+        arg: { id },
+      } = action.meta;
+      if (id) {
+        state.userPosts = state.userPosts.map((item) =>
+          item._id === id ? action.payload : item
+        );
+        state.posts = state.posts.map((item) =>
+          item._id === id ? action.payload : item
+        );
+      }
+    },
+    [updatePost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+  },
+});
+
+export const { setCurrentPage } = postSlice.actions;
+export default postSlice.reducer;
