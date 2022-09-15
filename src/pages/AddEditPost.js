@@ -47,13 +47,13 @@ const AddEdit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && content) {
-      const dataPost = { ...postData, name: user?.data?.user?.firstName };
+      const dataPost = { ...postData, firstName: user?.data?.user.firstName };
 
-      if (!id) {
-        dispatch(createPost({ dataPost, navigate, toast }));
-      } else {
-        console.log(dataPost); //new data
+      if (id) {
+        //console.log(dataPost); //new data
         dispatch(updatePost({ id, dataPost, toast, navigate }));
+      } else {
+        dispatch(createPost({ dataPost, navigate, toast }));
       }
       handleClear();
     }
@@ -139,5 +139,5 @@ const AddEdit = () => {
     </div>
   );
 };
-//te line 128 e fshiva butonin submit se i tepert
+
 export default AddEdit;

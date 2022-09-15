@@ -47,7 +47,6 @@ const Post = () => {
             alt={post.title}
           />
           <MDBCardBody>
-            <h3>{post.title}</h3>
             <MDBBtn
               tag="a"
               color="none"
@@ -61,7 +60,7 @@ const Post = () => {
                 style={{ float: 'left' }}
               />
             </MDBBtn>
-
+            <h3>{post.title}</h3>
             <span>
               <p className="text-start postName">
                 Published by: {post.firstName}

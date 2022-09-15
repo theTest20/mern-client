@@ -5,6 +5,7 @@ export const createPost = createAsyncThunk(
   'post/createPost',
   async ({ dataPost, navigate, toast }, { rejectWithValue }) => {
     try {
+      // console.log(dataPost);
       const response = await api.createPost(dataPost);
       toast.success('Post Added Successfully');
       navigate('/');
@@ -72,11 +73,10 @@ export const deletePost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
   'post/updatePost',
-  async ({ id, updateData, toast, navigate }, { rejectWithValue }) => {
+  async ({ id, dataPost, toast, navigate }, { rejectWithValue }) => {
     // console.log(id); //id ok
-    console.log(updateData); //undefined
     try {
-      const response = await api.updatePost(id, updateData);
+      const response = await api.updatePost(id, dataPost);
       toast.success('Post updated successfully!');
       console.log(response.data); //old datas
       navigate('/');
