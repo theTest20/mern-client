@@ -24,10 +24,8 @@ import { getPost } from '../redux/features/postsSlice';
 const Post = () => {
   const dispatch = useDispatch();
   const { post } = useSelector((state) => ({ ...state.post }));
-  const { user } = useSelector((state) => ({
-    ...state.auth,
-  }));
-  // console.log(post);
+
+  console.log(post);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -65,7 +63,7 @@ const Post = () => {
             <h3>{post.title}</h3>
             <span>
               <p className="text-start postName">
-                Published by: {user?.data?.user?.firstName}
+                Published by: {post?.publisher?.firstName}
               </p>
             </span>
             <MDBCardText className="text-start mt-2">
