@@ -34,7 +34,7 @@ const AddEdit = () => {
   useEffect(() => {
     if (id) {
       const post = userPosts.find((post) => post._id === id);
-      console.log(post);
+      //  console.log(post);
       setPostData({ ...post });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

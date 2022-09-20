@@ -24,18 +24,20 @@ import { getPost } from '../redux/features/postsSlice';
 const Post = () => {
   const dispatch = useDispatch();
   const { post } = useSelector((state) => ({ ...state.post }));
+  const { user } = useSelector((state) => ({
+    ...state.auth,
+  }));
   // console.log(post);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //const classes = useStyles();
   useEffect(() => {
     if (id) {
       dispatch(getPost(id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  console.log(post);
+  // console.log(post);
   return (
     <>
       <MDBContainer>
@@ -63,7 +65,7 @@ const Post = () => {
             <h3>{post.title}</h3>
             <span>
               <p className="text-start postName">
-                Published by: {post.firstName}
+                Published by: {user?.data?.user?.firstName}
               </p>
             </span>
             <MDBCardText className="text-start mt-2">

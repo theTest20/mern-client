@@ -41,6 +41,38 @@ export const singUp = createAsyncThunk(
   }
 );
 
+export const updateUserInfo = createAsyncThunk(
+  'auth/updateUser',
+  async ({ newDatas, toast, navigate }, { rejectWithValue }) => {
+    //console.log(newDatas);
+    try {
+      const response = await api.updateUserData(newDatas);
+      toast.success('Profile updated successfully!');
+      //console.log(response.data);
+      navigate('/');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response);
+    }
+  }
+);
+
+export const updateUserPassword = createAsyncThunk(
+  'auth/updateUserPassword',
+  async ({ newPassword, toast, navigate }, { rejectWithValue }) => {
+    console.log(newPassword);
+    try {
+      const response = await api.updatePassword(newPassword);
+      toast.success('Profile updated successfully!');
+      //console.log(response.data);
+      navigate('/');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -87,6 +119,28 @@ const authSlice = createSlice({
     [singUp.rejected]: (state, action) => {
       state.loading = false;
       console.log(action.payload);
+      state.error = action.payload;
+    },
+    [updateUserInfo.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [updateUserInfo.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    [updateUserInfo.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [updateUserPassword.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [updateUserPassword.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    [updateUserPassword.rejected]: (state, action) => {
+      state.loading = false;
       state.error = action.payload;
     },
   },

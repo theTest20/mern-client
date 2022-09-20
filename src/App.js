@@ -10,6 +10,7 @@ import Post from './pages/Post';
 import MyPosts from './pages/MyPosts';
 import Header from './components/Header';
 import NotFound from './pages/NotFound';
+import Me from './pages/Me';
 import PrivateRoutes from './components/PrivateRoutes';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -32,6 +33,14 @@ function App() {
           <Route path="/posts/:id" element={<Post />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/me"
+            element={
+              <PrivateRoutes>
+                <Me />
+              </PrivateRoutes>
+            }
+          />
           <Route
             path="/posts"
             element={
@@ -56,6 +65,7 @@ function App() {
               </PrivateRoutes>
             }
           />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

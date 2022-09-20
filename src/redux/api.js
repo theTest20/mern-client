@@ -11,6 +11,10 @@ API.interceptors.request.use((req) => {
 });
 export const logIn = (formData) => API.post('users/login', formData);
 export const singUp = (formData) => API.post('users/signup', formData);
+export const updateUserData = (userData) =>
+  API.patch('users/updateMe', userData);
+export const updatePassword = (newPassword) =>
+  API.patch('users/updateMyPassword/', newPassword);
 export const createPost = (postData) => API.post('/posts', postData);
 export const getAllPosts = (page) => API.get(`/posts?page=${page}`);
 export const getPost = (id) => API.get(`/posts/${id}`);
