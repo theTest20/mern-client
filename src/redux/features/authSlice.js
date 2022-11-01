@@ -7,15 +7,13 @@ export const login = createAsyncThunk(
   async ({ inputValues, navigate, toast }, { rejectWithValue }) => {
     try {
       const res = await api.logIn(inputValues);
-      toast.success('Login Successfully');
+      toast.success('Login Successfully', {
+        position: 'top-center',
+      });
       navigate('/');
       return res.data;
     } catch (err) {
-      if (!err.res) {
-        let error = (err.message =
-          'Unable to log in due to incorrect inputs or account is not verified!');
-        return rejectWithValue(error);
-      }
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -25,18 +23,11 @@ export const singUp = createAsyncThunk(
   async ({ inputValues, navigate, toast }, { rejectWithValue }) => {
     try {
       const res = await api.singUp(inputValues);
-      toast.success(
-        'Register successfully. A link for account verification was sent into your email, please check it, in order to continue!'
-      );
+      toast.success('Account created successfully.');
       navigate('/');
       return res.data;
     } catch (err) {
-      // if (!err.res) {
-      //   //console.log(err.request.response);
-      //   //return rejectWithValue(err.request.response);
-      //   let error = (err.message = 'User already exist!');
-      // }
-      return rejectWithValue(err);
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -52,7 +43,7 @@ export const updateUserInfo = createAsyncThunk(
       navigate('/');
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.response);
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -60,7 +51,6 @@ export const updateUserInfo = createAsyncThunk(
 export const updateUserPassword = createAsyncThunk(
   'auth/updateUserPassword',
   async ({ newPassword, toast, navigate }, { rejectWithValue }) => {
-    console.log(newPassword);
     try {
       const response = await api.updatePassword(newPassword);
       toast.success('Profile updated successfully!');
@@ -68,7 +58,56 @@ export const updateUserPassword = createAsyncThunk(
       navigate('/');
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.response);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const deleteMe = createAsyncThunk(
+  'auth/deleteMe',
+  async ({ navigate, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.deleteMyProfile();
+      toast.success('We hope to see you back soon!');
+      navigate('/');
+      return response;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const emailForgotPassword = createAsyncThunk(
+  'auth/emailForgotPassword',
+  async ({ inputValues, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.eforgotPassword(inputValues);
+      toast.success(
+        'A link to reset password has been sent into your email. Please, check it!',
+        {
+          position: 'top-center',
+        }
+      );
+
+      return response.data;
+    } catch (err) {
+      //console.log(err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const resetForgotPassword = createAsyncThunk(
+  'auth/resetForgottenPassword',
+  async ({ inputValues, token, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.resetPassword(inputValues, token);
+      toast.success('Password has been reset, please go at login page!', {
+        position: 'top-center',
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -100,10 +139,11 @@ const authSlice = createSlice({
         JSON.stringify({ ...action.payload })
       );
       state.user = action.payload;
+      console.log(state.user);
     },
     [login.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload?.message;
     },
     [singUp.pending]: (state, action) => {
       state.loading = true;
@@ -118,8 +158,8 @@ const authSlice = createSlice({
     },
     [singUp.rejected]: (state, action) => {
       state.loading = false;
-      console.log(action.payload);
-      state.error = action.payload;
+
+      state.error = action.payload?.message;
     },
     [updateUserInfo.pending]: (state, action) => {
       state.loading = true;
@@ -130,7 +170,7 @@ const authSlice = createSlice({
     },
     [updateUserInfo.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload?.message;
     },
     [updateUserPassword.pending]: (state, action) => {
       state.loading = true;
@@ -141,7 +181,42 @@ const authSlice = createSlice({
     },
     [updateUserPassword.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload?.message;
+    },
+    [deleteMe.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [deleteMe.fulfilled]: (state, action) => {
+      state.loading = false;
+      localStorage.clear();
+      state.user = null;
+    },
+    [deleteMe.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    },
+    [emailForgotPassword.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [emailForgotPassword.fulfilled]: (state, action) => {
+      state.loading = false;
+
+      state.user = action.payload;
+    },
+    [emailForgotPassword.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    },
+    [resetForgotPassword.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [resetForgotPassword.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    [resetForgotPassword.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
     },
   },
 });

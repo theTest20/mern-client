@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import noPhoto from '../images/noPhoto.png';
 import {
   MDBCard,
   MDBCardBody,
@@ -25,7 +26,6 @@ const Post = () => {
   const dispatch = useDispatch();
   const { post } = useSelector((state) => ({ ...state.post }));
 
-  console.log(post);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -38,12 +38,12 @@ const Post = () => {
   // console.log(post);
   return (
     <>
-      <MDBContainer>
+      <MDBContainer className="mt-5">
         <MDBCard className="mb-3 mt-2">
           <MDBCardImage
             position="top"
-            style={{ width: '90%', maxHeight: '600px' }}
-            src={post.imageCover}
+            style={{ width: '90%', maxHeight: '480px' }}
+            src={post.imageCover || noPhoto}
             alt={post.title}
           />
           <MDBCardBody>
@@ -63,7 +63,7 @@ const Post = () => {
             <h3>{post.title}</h3>
             <span>
               <p className="text-start postName">
-                Published by: {post?.publisher?.firstName}
+                Published by: {post?.publisher?.firstName || 'deleted user'}
               </p>
             </span>
             <MDBCardText className="text-start mt-2">

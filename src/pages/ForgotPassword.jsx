@@ -3,36 +3,32 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBCardFooter,
   MDBValidation,
   MDBBtn,
-  MDBIcon,
   MDBSpinner,
 } from 'mdb-react-ui-kit';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { login } from '../redux/features/authSlice';
-
+import { emailForgotPassword } from '../redux/features/authSlice';
 const initialState = {
   email: '',
-  password: '',
 };
 
-const Login = () => {
-  const navigate = useNavigate();
+const ForgotPassword = () => {
   const dispatch = useDispatch();
   const [inputValues, setValues] = useState(initialState);
   const { loading, error } = useSelector((state) => ({ ...state.auth }));
-  const { email, password } = inputValues;
+  console.log(inputValues);
+  const { email } = inputValues;
 
   useEffect(() => {
     error && toast.error(error);
   }, [error]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email && password) {
-      dispatch(login({ inputValues, navigate, toast }));
+    if (email) {
+      dispatch(emailForgotPassword({ inputValues, toast }));
     }
   };
   const onInputChange = (e) => {
@@ -50,8 +46,7 @@ const Login = () => {
       }}
     >
       <MDBCard alignment="center">
-        <MDBIcon fas icon="user-circle" className="fa-2x" />
-        <h5>Sign In</h5>
+        <h5>Please enter your email account </h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} noValidate className="row g-3">
             <div className="col-md-12">
@@ -66,18 +61,6 @@ const Login = () => {
                 validation="Please provide your email"
               />
             </div>
-            <div className="col-md-12">
-              <MDBInput
-                label="Password"
-                type="password"
-                value={password}
-                name="password"
-                onChange={onInputChange}
-                required
-                invalid
-                validation="Please provide your password"
-              />
-            </div>
             <div className="col-12">
               <MDBBtn style={{ width: '100%' }} className="mt-2">
                 {loading && (
@@ -88,20 +71,14 @@ const Login = () => {
                     className="me-2"
                   />
                 )}
-                Login
+                Send
               </MDBBtn>
             </div>
           </MDBValidation>
         </MDBCardBody>
-        <MDBCardFooter>
-          <p>Don't have an account?</p>
-          <Link to="/signup">
-            <p>Sign Up</p>
-          </Link>
-        </MDBCardFooter>
       </MDBCard>
     </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;

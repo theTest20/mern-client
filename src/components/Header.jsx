@@ -19,6 +19,7 @@ import decode from 'jwt-decode';
 const Header = () => {
   const [show, setShow] = useState(false);
   const { user } = useSelector((state) => ({ ...state.auth }));
+  //console.log(user);
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   const token = user?.token;
@@ -53,13 +54,13 @@ const Header = () => {
         </MDBNavbarToggler>
         <MDBCollapse show={show} navbar>
           <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
-            <MDBNavbarItem>
-              <MDBNavbarLink href="/">
-                <p className="header-text">Home</p>
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-            {user && (
+            {token && (
               <>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/">
+                    <p className="header-text">Home</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/posts">
                     <p className="header-text">Add Post</p>
@@ -77,7 +78,7 @@ const Header = () => {
                 </MDBNavbarItem>
               </>
             )}
-            {user ? (
+            {token ? (
               <MDBNavbarItem>
                 <MDBNavbarLink href="/">
                   <p className="header-text" onClick={() => handleLogout()}>
@@ -86,11 +87,18 @@ const Header = () => {
                 </MDBNavbarLink>
               </MDBNavbarItem>
             ) : (
-              <MDBNavbarItem>
-                <MDBNavbarLink href="/login">
-                  <p className="header-text">Log In/Sign Up</p>
-                </MDBNavbarLink>
-              </MDBNavbarItem>
+              <>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/login">
+                    <p className="header-text">Log in</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/signup">
+                    <p className="header-text"> Sign up</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+              </>
             )}
           </MDBNavbarNav>
         </MDBCollapse>

@@ -7,6 +7,7 @@ API.interceptors.request.use((req) => {
       JSON.parse(localStorage.getItem('userProfile')).token
     }`;
   }
+
   return req;
 });
 export const logIn = (formData) => API.post('users/login', formData);
@@ -15,6 +16,14 @@ export const updateUserData = (userData) =>
   API.patch('users/updateMe', userData);
 export const updatePassword = (newPassword) =>
   API.patch('users/updateMyPassword/', newPassword);
+export const deleteMyProfile = () => {
+  API.delete(`users/deleteMe`);
+};
+export const eforgotPassword = (email) =>
+  API.post('users/forgotPassword', email);
+export const resetPassword = (newPassword, token) =>
+  API.patch(`users/resetPassword/${token}`, newPassword);
+
 export const createPost = (postData) => API.post('/posts', postData);
 export const getAllPosts = (page) => API.get(`/posts?page=${page}`);
 export const getPost = (id) => API.get(`/posts/${id}`);

@@ -11,6 +11,8 @@ import MyPosts from './pages/MyPosts';
 import Header from './components/Header';
 import NotFound from './pages/NotFound';
 import Me from './pages/Me';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import PrivateRoutes from './components/PrivateRoutes';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -33,6 +35,8 @@ function App() {
           <Route path="/posts/:id" element={<Post />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route
             path="/me"
             element={

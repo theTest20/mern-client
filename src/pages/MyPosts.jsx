@@ -28,9 +28,8 @@ const MyPosts = () => {
       dispatch(getUserPosts(userId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, userId]); //REACT_APP_API_URL
-  console.log(userId);
-  console.log(userPosts);
+  }, [dispatch, userId]);
+
   const excerpt = (str) => {
     if (str.length > 40) {
       str = str.substring(0, 40) + ' ...';

@@ -14,23 +14,23 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllPosts(currentPage));
-    // console.log(posts); //-->postet jane Ok
+    // console.log(posts); //-->posts Ok
   }, [dispatch, currentPage]);
-  //console.log(posts);
+
   if (loading) {
     return <Spinner />;
   }
   return (
     <div
       style={{
-        margin: '25px 50px',
+        margin: 'auto',
         padding: '15px',
         maxWidth: '1000px',
         alignContent: 'center',
         height: '100px',
       }}
     >
-      <MDBRow className="mt-5">
+      <MDBRow className="mt-5 ">
         {posts.length === 0 && (
           <MDBTypography className="text-center mt-10 mb-0" tag="h2">
             No Posts Found

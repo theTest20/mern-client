@@ -18,7 +18,10 @@ const CardPost = ({ title, content, imageCover, _id }) => {
   };
   return (
     <MDBCardGroup>
-      <MDBCard className="h-100 mt-2 d-sm-flex" style={{ maxWidth: '20rem' }}>
+      <MDBCard
+        className="h-100 mt-2 d-sm-flex me-3 "
+        style={{ maxWidth: '20rem' }}
+      >
         <MDBCardImage
           src={imageCover}
           alt={title}

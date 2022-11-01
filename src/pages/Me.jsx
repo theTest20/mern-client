@@ -10,11 +10,12 @@ import {
 } from 'mdb-react-ui-kit';
 
 //import FileBase from 'react-file-base64';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   updateUserInfo,
   updateUserPassword,
+  deleteMe,
 } from '../redux/features/authSlice';
 import { toast } from 'react-toastify';
 const initialState1 = {
@@ -30,9 +31,9 @@ const initialState2 = {
 const Me = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({
-    ...state.auth,
-  }));
+  // const { user } = useSelector((state) => ({
+  //   ...state.auth,
+  // }));
   const [inputValues, setValues] = useState(initialState1);
   const [inputPassword, setPassword] = useState(initialState2);
   const { loading, error } = useSelector((state) => ({ ...state.auth }));
@@ -70,6 +71,11 @@ const Me = () => {
     setPassword({ ...inputPassword, [name]: value });
   };
 
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      dispatch(deleteMe({ navigate, toast }));
+    }
+  };
   return (
     <div
       style={{
@@ -137,7 +143,7 @@ const Me = () => {
                 style={{
                   color: 'black',
                   backgroundColor: 'black',
-                  height: 5,
+                  height: 3,
                 }}
               />
             </div>
@@ -148,6 +154,7 @@ const Me = () => {
             className="row g-3"
           >
             <div className="col-md-12">
+              <p>Update Password</p>
               <MDBInput
                 label="Current Password"
                 type="password"
@@ -161,26 +168,26 @@ const Me = () => {
             </div>
             <div className="col-md-12">
               <MDBInput
-                label="Password"
+                label=" New password"
                 type="password"
                 value={password}
                 name="password"
                 onChange={onInputChange2}
                 required
                 invalid
-                validation="Please provide your password"
+                validation="Please provide new password"
               />
             </div>
             <div className="col-md-12">
               <MDBInput
-                label="Confirm Password"
+                label="Confirm new password"
                 type="password"
                 value={passwordConfirm}
                 name="passwordConfirm"
                 onChange={onInputChange2}
                 required
                 invalid
-                validation="Confirm Password does not match with Password!"
+                validation="Confirm new password does not match with new password!"
               />
             </div>
             <div className="col-12">
@@ -196,7 +203,17 @@ const Me = () => {
                 Save Password
               </MDBBtn>
             </div>
+            <hr
+              style={{
+                color: 'black',
+                backgroundColor: 'black',
+                height: 3,
+              }}
+            />
           </MDBValidation>
+          <MDBBtn color="link" onClick={() => handleDelete()}>
+            Delete Account
+          </MDBBtn>
         </MDBCardBody>
       </MDBCard>
     </div>

@@ -38,7 +38,7 @@ export const getPost = createAsyncThunk(
       return response.data;
     } catch (err) {
       //console.log(err);
-      return rejectWithValue(err);
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -48,7 +48,7 @@ export const getUserPosts = createAsyncThunk(
   async (userId, { rejectWithValue }) => {
     try {
       const response = await api.getUserPosts(userId);
-      // console.log(response.data);
+
       return response.data;
     } catch (err) {
       console.log(err);
@@ -78,7 +78,7 @@ export const updatePost = createAsyncThunk(
     try {
       const response = await api.updatePost(id, dataPost);
       toast.success('Post updated successfully!');
-      console.log(response.data); //old datas
+
       navigate('/');
       return response.data;
     } catch (err) {
@@ -122,7 +122,7 @@ const postSlice = createSlice({
     [getAllPosts.fulfilled]: (state, action) => {
       state.loading = false;
       // console.log(action.payload);
-      state.posts = action.payload.data; //this one might cause some issue
+      state.posts = action.payload.data;
       state.numberOfPages = action.payload.numberOfPages;
       state.currentPage = action.payload.currentPage;
     },
