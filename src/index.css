@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.header-text {
+  color: #e1ecef;
+  font-weight: 500;
+  margin-top: 7px;
+  padding: 3px;
+  font-size: 17px;
+  border: 1px solid rgb(202, 202, 223);
+}
+
+.header-span {
+  color: gray;
+  font-weight: 500;
+  margin-top: 7px;
+  font-size: 17px;
+}
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.postName {
+  color: '#F48FB1';
+  font-size: 18px;
+  margin: 0 0 0 4px;
+  font-weight: 500;
+}
+
+.search-bar{
+   border: 1px solid rgb(202, 202, 223);
+   padding: 4px;
+}
+
+.bttn-search {
+  background: rgb(201, 195, 195);
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: rgb(44, 42, 42);
+}
