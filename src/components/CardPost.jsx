@@ -39,7 +39,8 @@ const CardPost = ({ posts}) => {
         </MDBCardBody>
       </MDBCol>
       </MDBRow>
-    </MDBCard>))}
+    </MDBCard>))
+    }
   </div>
   )
 };

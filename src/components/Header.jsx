@@ -13,7 +13,7 @@ import {
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setLogout } from '../redux/features/authSlice';
-//import { useNavigate } from 'react-router-dom';
+
 import decode from 'jwt-decode';
 
 const Header = () => {
@@ -33,7 +33,7 @@ const Header = () => {
   };
 
   return (
-    <MDBNavbar fixed="top" expand="lg" style={{ backgroundColor: '#000000' }}>
+    <MDBNavbar fixed="top" expand="lg" style={{ backgroundColor: '#1E1A22' }}>
       <MDBContainer>
         <MDBNavbarBrand
           href="/"

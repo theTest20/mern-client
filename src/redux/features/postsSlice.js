@@ -136,7 +136,6 @@ const postSlice = createSlice({
     },
     [getPost.fulfilled]: (state, action) => {
       state.loading = false;
-
       state.post = action.payload.data;
     },
     [getPost.rejected]: (state, action) => {
@@ -148,7 +147,6 @@ const postSlice = createSlice({
     },
     [getUserPosts.fulfilled]: (state, action) => {
       state.loading = false;
-      console.log(action.payload);
       state.userPosts = action.payload;
     },
     [getUserPosts.rejected]: (state, action) => {

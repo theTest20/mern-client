@@ -21,6 +21,8 @@ const Home = () => {
   const [searchW, setSearch]=useState('');
   const [best, setBest]=useState(false);
 
+ 
+
   useEffect(() => {
     let timeout=0;
     if(searchW){
@@ -32,10 +34,13 @@ const Home = () => {
     if(!searchW){
       dispatch(getAllPosts({searchW,currentPage}));
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchW,currentPage]);
 
 
+ 
+ 
   const handleAll=()=>{
     setAll(true)
     setSearch('')
@@ -79,28 +84,28 @@ const Home = () => {
          </MDBBtn>}
         </div>
       ):
-      <MDBContainer  style={{marginTop:'120px', height:'auto'}}>
-      <MDBRow>
-         <form className="d-flex justify-content-end">
+      <MDBContainer style={{marginTop:'120px', height:'auto'}}>
+        <MDBRow>
+          <form className="d-flex justify-content-end search-form">
               <input
                 type="text"
                 name="search"
-                placeholder="Search"
+                placeholder="Search..."
                 value={searchW}
                 onChange={handleSearch}
                 className='search-bar'
               />
-              <button type='button' className='bttn-search '><i class="fas fa-search"></i></button>
+              <button type='button' className='bttn-search search-bar-btn'><i class="fas fa-search"></i></button>
           </form>
         </MDBRow>
         <MDBRow>
          <MDBCol md='9'>      
-            <div style={{width:'100%', marginTop:'5px'}}>
-             <div className='d-flex square border-bottom mt-5'>
+            <div style={{width:'100%', marginTop:'0px'}}>
+             <div className='d-flex square border-bottom mt-1'>
               <button className='me-5' style={{ border: 'none', background:"none", color:'blue'}} onClick={()=>handleAll()}>All</button>
               <button style={{border: 'none', background:"none",color:'blue'}} onClick={()=>handleBest()}>Best</button>
              </div>
-              {all? <CardPost posts={posts?posts:[]}/>: 'Sorry, not yet developed'}
+              {all? <CardPost posts={posts?posts:[]}/> : 'Sorry, not yet developed'}
               <nav aria-label='Page navigation'>
                {posts.length > 0 && (
                 <Pagination

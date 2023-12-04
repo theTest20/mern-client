@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import noPhoto from '../images/noPhoto.png';
+import  { useEffect} from 'react';
+import noPhoto from './../images/noPhoto.png';
 import {
   MDBCard,
   MDBCardBody,
@@ -18,6 +18,7 @@ import { getPost } from '../redux/features/postsSlice';
 const Post = () => {
   const dispatch = useDispatch();
   const { post } = useSelector((state) => ({ ...state.post }));
+ 
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -28,7 +29,10 @@ const Post = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  
+
+console.log(post)
+
+
   return (
     <>
       <MDBContainer className="mt-5">
@@ -54,14 +58,25 @@ const Post = () => {
                 size="lg"
                 icon="long-arrow-alt-left"
                 style={{ float: 'left' }}
-              />
+              /> 
             </MDBBtn>
             <h3>{post.title}</h3>
-            <span>
-              <p className="text-start postName">
-                Published by: {post?.publisher?.firstName || 'deleted user'}
-              </p>
-            </span>
+            <div className="d-flex align-items-center m-0">
+            {post.userImage && post.userImage.length > 0 ? (
+                <MDBCardImage
+                position="left"
+                className="user-image" //userImage
+                src={`http://localhost:5000/img/users/${post.userImage[0].photo}`}
+                />
+             ) : (
+               <MDBIcon icon='user-alt' size='lg' style={{ marginRight: '5px' }} />
+            )}          
+           <div className="ml-3">
+                  <p className="postName">
+                    {post?.publisher?.firstName || 'deleted user'}
+                  </p>
+                </div>
+            </div>
             <MDBCardText className="text-start mt-2">
               <MDBIcon
                 style={{ float: 'left', margin: '5px' }}

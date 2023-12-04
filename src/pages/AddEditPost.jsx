@@ -80,9 +80,9 @@ const AddEdit = () => {
       }}
       className="container"
     >
-      <MDBCard alignment="center">
-        <h5>{id ? 'Update Post' : 'Add new Post'}</h5>
-        <MDBCardBody>
+   
+        <h5>{id ? 'Update Post' : 'Add new post'}</h5>
+
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
             <div className="col-md-12">
               <MDBInput
@@ -134,8 +134,6 @@ const AddEdit = () => {
               </MDBBtn>
             </div>
           </MDBValidation>
-        </MDBCardBody>
-      </MDBCard>
     </div>
   );
  

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   MDBInput,
   MDBValidation,
@@ -31,7 +31,8 @@ const Me = () => {
   const { user } = useSelector((state) => ({
     ...state.auth,
   }));
-
+ 
+ 
   const [firstName, setFirstName]=useState('');
   const [lastName, setLastName]=useState('');
   const [email, setEmail]=useState('');

@@ -54,3 +54,42 @@ code {
   outline: none;
   color: rgb(44, 42, 42);
 }
+
+.user-image {
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  margin-right: 10px; 
+}
+
+
+
+.search-form {
+  position: relative;
+}
+
+.search-bar {
+  padding-right: 40px; 
+  border: 1px solid #ced4da;
+  border-radius: 15px; 
+}
+
+.search-bar-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px; 
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+
+.search-bar-btn i {
+  color: #495057; 
+  font-size: 16px; 
+}
+
+
